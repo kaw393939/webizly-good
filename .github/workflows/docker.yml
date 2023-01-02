@@ -23,17 +23,15 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - name: Test with pytest
-        run: |
-            pytest -vv
-            echo ::set-output name=exit_code::$?
-  
+        run: pytest -vv
+
 
   build-container:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
+        if: steps.test.outcome == 'success'
         uses: actions/checkout@v2
-        if: steps.test.outputs.exit_code == 0
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
