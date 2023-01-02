@@ -3,7 +3,8 @@ name: Publish Image to Docker
 on:
   push:
     branches:
-      - '**'
+      - 'production'
+      - 'development'
     tags:
       - 'v*'
 
@@ -36,7 +37,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          platforms: 'linux/arm64/v8'
+          platforms: 'linux/arm64/v8, linux/amd64'
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
