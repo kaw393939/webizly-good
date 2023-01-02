@@ -3,9 +3,10 @@ name: Run Pytest
 on:
   push:
     branches:
-      - all
+      - 'master'
     tags:
       - 'v*'
+
 
 jobs:
   runtest:
