@@ -1,7 +1,6 @@
-name: Production Workflow 1
+name: Publish Image to Docker
 
-on:
-  push:
+on: [push]
     tags:
       - 'v*'
 

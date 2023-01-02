@@ -1,11 +1,8 @@
-name: Production Workflow 1
+name: Run Pytest
 
-on:
-  push:
-    branches:
-      - 'master'
+on: [push]
     tags:
-      - 'production'
+      - 'v*'
 
 jobs:
   runtest:
