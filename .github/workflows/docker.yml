@@ -1,4 +1,4 @@
-name: Publish Image to Docker
+name: Test, Build, and Push Image to Docker
 
 on:
   push:
