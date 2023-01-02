@@ -56,7 +56,6 @@ class User(UserMixin, db.Model, GenericSQLAlchemyMethods):
     authenticated = db.Column(db.Boolean, default=False)
     active = db.Column(db.Boolean)
     profile = relationship("Profile", uselist=False, backref="user", cascade="all, delete-orphan")
-    sample_calcs = relationship("SampleCalc", uselist=True, backref="user", cascade="all, delete-orphan")
     groups = relationship("Group", secondary="membership", back_populates="users")
 
     def __init__(self, email, password, active=True):
@@ -121,26 +120,3 @@ class Membership(db.Model, GenericSQLAlchemyMethods):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     group_id = db.Column(db.Integer, db.ForeignKey('group.id'))
-
-
-class SampleCalc(db.Model, GenericSQLAlchemyMethods):
-    id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, ForeignKey('user.id'))
-    z_score = db.Column(db.Numeric(10, 2))
-    margin_error = db.Column(db.Numeric(10, 2))
-    std = db.Column(db.Numeric(10, 2))
-    population_size = db.Column(db.Integer)
-
-    def __init__(self, z_score, margin_error, std, population_size):
-        self.z_score = z_score
-        self.margin_error = margin_error
-        self.std = std
-        self.population_size = population_size
-
-    @hybrid_property
-    def calc_sample_size(self):
-        numerator = (pow(self.z_score, 2) * self.std * (1 - self.std)) / (pow(self.margin_error, 2))
-        denominator = 1 + ((pow(self.z_score, 2) * self.std * (1 - self.std)) / (
-                pow(self.margin_error, 2) * self.population_size))
-        answer = numerator / denominator
-        return round(answer, 2)

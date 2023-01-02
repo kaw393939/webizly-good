@@ -10,7 +10,7 @@ ENV DEPLOYMENT=production
 WORKDIR /home/myuser
 COPY --chown=myuser:myuser . .
 RUN pip3 install -r requirements.txt
-RUN chmod u+x ./production.sh
-CMD ["./production.sh"]
+RUN chmod u+x ./startup.sh
+CMD ["./startup.sh"]
 
 # CMD ["runuser", "-u", "myuser", "--", "python", "-m", "flask", "run", "--host=0.0.0.0"]

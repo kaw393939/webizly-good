@@ -6,9 +6,8 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - DEPLOYMENT=development
+      - DEPLOYMENT=production
     stdin_open: true # docker run -i
     tty: true        # docker run -t
-    command: ["./development.sh"]
     volumes:
       - .:/home/myuser
