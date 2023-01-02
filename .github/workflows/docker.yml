@@ -12,32 +12,29 @@ jobs:
   runtest:
     runs-on: ubuntu-latest
     steps:
+      - id: checkout
       - uses: actions/checkout@v2
       - name: Set up Python 3.11
-        id: test
+      - id: setup_python
         uses: actions/setup-python@v1
         with:
           python-version: 3.11
+      - id: install_dependencies
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+      - id: pytest
       - name: Test with pytest
         run: pytest -vv
-
-
-  build-container:
-    runs-on: ubuntu-latest
-    steps:
       - name: Checkout code
-        if: steps.test.outcome == 'success'
+        if: steps.pytest.outcome == 'success'
         uses: actions/checkout@v2
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v3
