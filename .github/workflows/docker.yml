@@ -37,7 +37,7 @@ jobs:
         id: pytest
         run: |
           pytest
-      - if: steps.pytest.outcome == 'success
+      - if: steps.pytest.outcome == 'success'
         name: Login to DockerHub
         uses: docker/login-action@v1
         with:
