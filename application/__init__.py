@@ -72,8 +72,13 @@ dictConfig(
                 "class": "logging.StreamHandler",
                 "stream": "ext://sys.stdout",
                 "formatter": "default",
+            },
+            "wsgi": {
+                "class": "logging.StreamHandler",
+                "stream": "ext://sys.stdout",
+                "formatter": "default",
             }
         },
-        "root": {"level": "DEBUG", "handlers": ["console"]},
+        "root": {"level": "DEBUG", "handlers": ["console", "wsgi"]}
     }
 )
