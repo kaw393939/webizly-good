@@ -1,6 +1,8 @@
 """
 Main Flask Application Initialization
 """
+import os
+
 from flask import Flask
 from flask_bootstrap import Bootstrap5
 from flask_migrate import Migrate
@@ -21,7 +23,13 @@ login_manager = LoginManager()
 def init_app():
     """Initialize the core application."""
     app = Flask(__name__, instance_relative_config=False)
-    app.config.from_object(config.Config())
+    if os.getenv('DEPLOYMENT', "development"):
+        app.config.from_object(config.DevelopmentConfig)
+    elif os.getenv('DEPLOYMENT', "production"):
+        app.config.from_object(config.ProductionConfig)
+    else:
+        app.config.from_object(config.TestingConfig)
+
     csrf.init_app(app)
     bootstrap = Bootstrap5(app)
     app.context_processor(utility_text_processors)

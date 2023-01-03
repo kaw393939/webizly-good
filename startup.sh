@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+flask db init
+flask db migrate -m 'initial migration'
 flask db upgrade;
 if [ $DEPLOYMENT == "production" ]
 then

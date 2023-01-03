@@ -2,6 +2,7 @@ import pytest
 from faker import Faker
 from flask.testing import FlaskClient
 
+import config
 from application import init_app as create_app
 from application.database import db, User
 
@@ -33,11 +34,7 @@ def create_5_users(app, faker):
 @pytest.fixture(scope="function")
 def app():
     app = create_app()
-    app.config.update({
-        "TESTING": True,
-        "WTF_CSRF_ENABLED": False
-
-    })
+    app.config.from_object(config.TestingConfig)
 
     # other setup can go here
     with app.app_context():
@@ -45,10 +42,6 @@ def app():
         db.drop_all()
         db.create_all()
         yield app
-
-        db.session.remove()
-        # Uncomment To Reset Database After Test
-        # db.drop_all()
 
     # clean up / reset resources here
 
