@@ -6,8 +6,20 @@ services:
     ports:
       - "80:8080"
     environment:
-      - DEPLOYMENT=development
+      - DEPLOYMENT=production
+      - DATABASE_URL=postgresql+psycopg2://postgres:postgres@postgres:5432/postgres
     stdin_open: true # docker run -i
     tty: true        # docker run -t
     volumes:
       - .:/home/myuser
+    depends_on:
+    - postgres
+  postgres:
+    image: postgres:15.1-bullseye
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - '5432:5432'

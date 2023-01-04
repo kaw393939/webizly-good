@@ -5,7 +5,7 @@ import secrets
 
 class Config(object):
     """Default Config Settings"""
-    SQLALCHEMY_DATABASE_URI = os.getenv('SQLALCHEMY_DATABASE_URI', "sqlite:///app.db")
+    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
     SECRET_KEY = secrets.token_urlsafe(16)
     DEPLOYMENT = os.getenv('DEPLOYMENT', "development-default")
     TESTING = False
@@ -18,7 +18,6 @@ class ProductionConfig(Config):
 
 class DevelopmentConfig(Config):
     FLASK_DEBUG = True
-    pass
 
 
 class TestingConfig(Config):

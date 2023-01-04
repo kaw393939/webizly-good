@@ -1,4 +1,4 @@
-FROM python:3.11.1-slim-bullseye
+FROM python:3.11.1-bullseye
 RUN apt-get update &&\
     /usr/local/bin/python3 -m pip install --upgrade pip &&\
     /usr/local/bin/python3 -m pip install --upgrade setuptools &&\
