@@ -5,7 +5,7 @@ import secrets
 
 class Config(object):
     """Default Config Settings"""
-    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///:memory:')
     SECRET_KEY = secrets.token_urlsafe(16)
     DEPLOYMENT = os.getenv('DEPLOYMENT', "development-default")
     TESTING = False
@@ -21,6 +21,6 @@ class DevelopmentConfig(Config):
 
 
 class TestingConfig(Config):
-    DATABASE_URI = 'sqlite:///:memory:'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
     TESTING = True
     WTF_CSRF_ENABLED = False
